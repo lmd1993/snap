@@ -143,11 +143,12 @@ void TrainModel(TVVec<TInt, int64>& WalksVV, const int& Dimensions,
           double Exp = ExpTable[static_cast<int>(Product*ExpTablePrecision)+TableSize/2];
           Grad = (Label - 1 + 1 / (1 + Exp)) * Alpha;
         }
-        // mingda threshold 3
-        if (Label == 0){
+        // mingda threshold 3 for boost
+	// Iter <= 3 for early stopping
+        //if (Label == 0 && Iter<=3){
 //	  Grad = Grad * 1;
-          Grad = Grad * 3;
-        }
+         // Grad = Grad * 3;
+       // }
         for (int i = 0; i < Dimensions; i++) { 
           Neu1eV[i] += Grad * SynNeg(Target,i);
           SynNeg(Target,i) += Grad * SynPos(CurrWord,i);
